@@ -2,11 +2,20 @@ import os
 import base64
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class RemixRequest(BaseModel):
     image_url: str
